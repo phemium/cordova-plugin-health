@@ -311,7 +311,7 @@ public class HealthPlugin extends CordovaPlugin {
   }
 
   // detects if a) Google APIs are available, b) Google Fit is actually installed
-  private void isAvailable(final CallbackContext callbackContext) {{
+  private void isAvailable(final CallbackContext callbackContext) {
     Log.d(TAG, "executing isAvailable()");
     // first check that the Google APIs are available
     GoogleApiAvailability gapi = GoogleApiAvailability.getInstance();
