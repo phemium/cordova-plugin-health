@@ -311,22 +311,30 @@ public class HealthPlugin extends CordovaPlugin {
   }
 
   // detects if a) Google APIs are available, b) Google Fit is actually installed
-  private void isAvailable(final CallbackContext callbackContext) {
+  private void isAvailable(final CallbackContext callbackContext) {{
+    Log.d(TAG, "executing isAvailable()");
     // first check that the Google APIs are available
     GoogleApiAvailability gapi = GoogleApiAvailability.getInstance();
     int apiresult = gapi.isGooglePlayServicesAvailable(this.cordova.getActivity());
     if (apiresult == ConnectionResult.SUCCESS) {
+      Log.d(TAG, "Google API is available!");
       // then check that Google Fit is actually installed
       PackageManager pm = cordova.getActivity().getApplicationContext().getPackageManager();
       try {
+        Log.d(TAG, "Checking if Mi Fit is installed (com.google.android.apps.fitness)");
         pm.getPackageInfo("com.google.android.apps.fitness", PackageManager.GET_ACTIVITIES);
+        Log.d(TAG, "Mi Fit is installed on device");
+        Log.d(TAG, "Converting app info to PluginResult");
         // Success return object
         PluginResult result;
         result = new PluginResult(PluginResult.Status.OK, true);
         callbackContext.sendPluginResult(result);
       } catch (PackageManager.NameNotFoundException e) {
         Log.d(TAG, "Google Fit not installed");
+        Log.e(TAG, e.getMessage());
       }
+    } else {
+      Log.e(TAG, "Google API is not available!"); 
     }
     PluginResult result;
     result = new PluginResult(PluginResult.Status.OK, false);
